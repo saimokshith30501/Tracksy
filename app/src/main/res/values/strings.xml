@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Tracksy</string>
+    <string name="Login"><u><b><i>LogIn</i></b></u></string>
+    <string name="Signup"><u><b><i>SignUp</i></b></u></string>
+
+</resources>

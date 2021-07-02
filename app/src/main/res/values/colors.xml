@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFF6E4</color>
+    <color name="colorPrimaryDark">#F89E34</color>
+    <color name="colorAccent">#F89E34</color>
+    <color name="background">#FFF6E4</color>
+    <color name="black">#000000</color>
+    <color name="textBlack">#2F2F2F</color>
+    <color name="white">#ffffff</color>
+    <color name="available">#69CD60</color>
+    <color name="verLow">#FC4848</color>
+    <color name="low">#FF9356</color>
+    <color name="hintColour">#535252</color>
+    <color name="sliderBackground">#EFEFEF</color>
+</resources>

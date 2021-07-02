@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "202051750610",
+    "project_id": "tracksy-349d9",
+    "storage_bucket": "tracksy-349d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202051750610:android:592b62045a0d9d7f2e7b0b",
+        "android_client_info": {
+          "package_name": "com.developer.tracksy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202051750610-ke2jfuhnoqrhe96acoba0d6vim5gn79m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ_cUNtVMxEig-DZ3dSbkiwcaevC6M3Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202051750610-ke2jfuhnoqrhe96acoba0d6vim5gn79m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

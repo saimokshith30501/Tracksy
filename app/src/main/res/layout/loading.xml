@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:padding="20dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_autoPlay="true"
+        android:scaleType="fitCenter"
+        app:lottie_loop="true">
+    </com.airbnb.lottie.LottieAnimationView>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="Hang on..."
+        android:textSize="32dp"
+        android:fontFamily="@font/koho_bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+    </TextView>
+</LinearLayout>
