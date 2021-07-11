@@ -1,5 +1,6 @@
 package com.developer.tracksy
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -35,8 +36,10 @@ class SearchResults : LoginOrSignUp() {
     lateinit var age : String
     lateinit var rv_centers : RecyclerView
     lateinit var setAlerts : ImageButton
+    lateinit var goBack : Button
     lateinit var dismissAlerts : ImageButton
     lateinit var noData : LinearLayout
+    lateinit var alertsSuccess : LinearLayout
     lateinit var centersList : ArrayList<CentersData>
     lateinit var loadingDialog: LoadingDialog
     lateinit var adapter: PincodeSlotsRVAdapter
@@ -61,9 +64,11 @@ class SearchResults : LoginOrSignUp() {
         val nextDay = findViewById<ImageButton>(R.id.sr_next)
         val prevDay = findViewById<ImageButton>(R.id.sr_prev)
         setAlerts = findViewById<ImageButton>(R.id.sr_alerts)
+        goBack = findViewById<Button>(R.id.al_goBack)
         dismissAlerts = findViewById<ImageButton>(R.id.sr_dismissAlerts)
         val sub_title = findViewById<TextView>(R.id.sr_tvDate)
         noData = findViewById<LinearLayout>(R.id.sr_llNoData)
+        alertsSuccess = findViewById<LinearLayout>(R.id.sr_llAlertsSuccess)
         title.text=pincode
         nextDaysCalender.set(year.toInt(), month.toInt(), day.toInt())
         sub_title.text=day+" "+getMonthForInt(month.toInt() + 1)+" "+year
@@ -76,6 +81,9 @@ class SearchResults : LoginOrSignUp() {
                 false
         )
         back.setOnClickListener { finish() }
+        goBack.setOnClickListener {
+            startActivity(Intent(this,HomeScreen::class.java))
+        }
         nextDay.setOnClickListener {
             loadingDialog.startLoading()
             nextDaysCalender.add(Calendar.DATE, 1)
@@ -117,6 +125,8 @@ class SearchResults : LoginOrSignUp() {
         }
         setAlertsButton.setOnClickListener {
             checkAlertsStatus(true)
+            dialog.dismiss()
+
         }
         dialog.setContentView(view)
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -171,6 +181,9 @@ class SearchResults : LoginOrSignUp() {
         if (status){
             dismissAlerts.visibility=View.VISIBLE
             setAlerts.visibility=View.GONE
+            noData.visibility = View.GONE
+            rv_centers.visibility = View.GONE
+            alertsSuccess.visibility=View.VISIBLE
         }
         else{
             dismissAlerts.visibility=View.VISIBLE

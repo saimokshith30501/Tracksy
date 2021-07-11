@@ -1,16 +1,21 @@
 package com.developer.tracksy.RVAdapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.developer.tracksy.Models.APIPincodeResult
 import com.developer.tracksy.Models.CentersData
 import com.developer.tracksy.R
+import java.lang.Exception
 
 class PincodeSlotsRVAdapter(var all_centers: ArrayList<CentersData>,var context: Context) : RecyclerView.Adapter<PincodeSlotsRVAdapter.ItemsViewHolder>() {
     class ItemsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,6 +73,22 @@ class PincodeSlotsRVAdapter(var all_centers: ArrayList<CentersData>,var context:
         holder.tv_From.text="From : "+data.from
         holder.tv_To.text="To : "+data.to
         holder.tv_NoOfDoses.text=data.available_capacity.toString()
+        holder.iv_directions.setOnClickListener {
+            val gmmIntentUri = Uri.parse("geo:"+data.lat+","+data.long+"?q="+Uri.encode(data.name+" "+data.address))
+            Log.d("MAPS_URI",gmmIntentUri.toString());
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            try {
+                holder.itemView.context.startActivity(mapIntent)
+            }
+            catch (e : Exception){
+
+            }
+
+//            mapIntent.resolveActivity(holder.itemView.context.packageManager)?.let {
+//                holder.itemView.context.startActivity(mapIntent)
+//            }
+        }
          if (data.available_capacity<=5){
              holder.ll_main.background=context.getDrawable(R.drawable.very_low_background)
              holder.ll_doses.background=context.getDrawable(R.drawable.very_low_background)

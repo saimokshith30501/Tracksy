@@ -136,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
-                            android:text="Check nearby hospitals"
+                            android:text="Set alerts"
                             android:includeFontPadding="false"
                             android:fontFamily="@font/koho_bold"
                             android:textColor="@color/black">
@@ -160,7 +160,7 @@
                         android:background="@drawable/card_view_background">
                         <ImageView
                             android:padding="5dp"
-                            android:src="@drawable/ic_hospital"
+                            android:src="@drawable/alert"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         </ImageView>
