@@ -126,7 +126,6 @@ class SearchResults : LoginOrSignUp() {
         setAlertsButton.setOnClickListener {
             checkAlertsStatus(true)
             dialog.dismiss()
-
         }
         dialog.setContentView(view)
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
