@@ -47,27 +47,6 @@ public class HomeScreen extends AppCompatActivity {
         });
         bottomSheetBehavior = BottomSheetBehavior.from(view2);
         bottomSheetBehavior.setHideable(false);
-        FirebaseFirestore db= FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth=FirebaseAuth.getInstance();
-        db.collection("subscriptions").document(mAuth.getCurrentUser().getUid()).collection("pincodes").document("560001")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()){
-                            Log.d("TRACKSY_EXISTS"," EXISTS");
-                        }
-                        else {
-                            Log.d("TRACKSY_EXISTS"," DOES NOT EXISTS");
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("TRACKSY_EXISTS"," FAILED");
-                    }
-                });
     }
 
 }

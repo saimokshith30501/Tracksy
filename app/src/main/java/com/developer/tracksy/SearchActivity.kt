@@ -77,13 +77,6 @@ class SearchActivity : AppCompatActivity() {
                 selectedCalender.set(year,month,dayOfMonth)
                 nextDaysCalender.set(year,month,dayOfMonth)
                 nextDaysCalender.add(Calendar.DATE,1)
-                Log.d("CALENDER",nextDaysCalender.get(Calendar.DAY_OF_MONTH).toString()+"-"+(nextDaysCalender.get(Calendar.MONTH)+1).toString()+"-"+nextDaysCalender.get(Calendar.YEAR).toString())
-                nextDaysCalender.add(Calendar.DATE,1)
-                Log.d("CALENDER",nextDaysCalender.get(Calendar.DAY_OF_MONTH).toString()+"-"+(nextDaysCalender.get(Calendar.MONTH)+1).toString()+"-"+nextDaysCalender.get(Calendar.YEAR).toString())
-                nextDaysCalender.add(Calendar.DATE,1)
-                Log.d("CALENDER",nextDaysCalender.get(Calendar.DAY_OF_MONTH).toString()+"-"+(nextDaysCalender.get(Calendar.MONTH)+1).toString()+"-"+nextDaysCalender.get(Calendar.YEAR).toString())
-                nextDaysCalender.add(Calendar.DATE,1)
-                Log.d("CALENDER",nextDaysCalender.get(Calendar.DAY_OF_MONTH).toString()+"-"+(nextDaysCalender.get(Calendar.MONTH)+1).toString()+"-"+nextDaysCalender.get(Calendar.YEAR).toString())
                 var SelectedDob : String=dayOfMonth.toString()+"-"+(month+1)+"-"+year.toString()
                 tilDate.editText!!.setText(SelectedDob)
             }
