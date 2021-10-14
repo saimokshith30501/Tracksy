@@ -6,81 +6,66 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".LoginOrSignUp">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/Title"
-            android:text="Tracksy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/koho_bold"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="40sp"
             android:includeFontPadding="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:text="Tracksy"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="40sp"></TextView>
+
         <TextView
-            android:includeFontPadding="false"
             android:id="@+id/subTitle"
-            android:text="Helps you to track!"
-            android:fontFamily="@font/koho_medium"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/koho_medium"
+            android:includeFontPadding="false"
+            android:text="Helps you to track!"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"></TextView>
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/home_animation"
-            android:visibility="visible"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
             android:layout_width="300dp"
             android:layout_height="400dp"
-            app:lottie_rawRes="@raw/home_vaccine"
-            app:lottie_autoPlay="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
-            app:lottie_loop="true">
-        </com.airbnb.lottie.LottieAnimationView>
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/home_vaccine"></com.airbnb.lottie.LottieAnimationView>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_back_login_homescreen"
-        android:fontFamily="@font/koho_bold"
-        android:onClick="login"
-        android:text="Login"
-        android:textColor="#F89E34"
-        android:transitionName="trans2"
-        app:layout_constraintBottom_toBottomOf="@id/bottomView"
-        app:layout_constraintStart_toStartOf="parent"></Button>
 
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="40dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_back_register_homescreen"
         android:fontFamily="@font/koho_bold"
         android:onClick="signup"
-        android:text="Sign up"
+        android:text="START"
         android:textColor="@color/white"
         android:transitionName="trans1"
         app:layout_constraintBottom_toBottomOf="@id/bottomView"
-        app:layout_constraintEnd_toEndOf="parent"></Button>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"></Button>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomView"

@@ -28,18 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void CheckUserStatus() {
-      FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
-            new Handler().postDelayed(new Runnable(){
-                @Override
-                public void run(){
-                    Intent startActivity = new Intent(MainActivity.this, HomeScreen.class);
-                    startActivity(startActivity);
-                    finish();
-                }
-            },2000);
-        }
-        else {      new Handler().postDelayed(new Runnable(){
+         new Handler().postDelayed(new Runnable(){
                         @Override
                         public void run(){
                             Intent startActivity = new Intent(MainActivity.this, LoginOrSignUp.class);
@@ -47,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                         }
                     },2000);
-        }
+
     }
     @Override
     protected void onStart() {

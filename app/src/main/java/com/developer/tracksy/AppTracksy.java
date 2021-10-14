@@ -43,7 +43,7 @@ public class AppTracksy extends Application {
             }
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/")
+                    .baseUrl("https://cdn-api.co-vin.in/api/v2/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(builder.build())
                     .build();

@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".SearchResults"></activity>
+        <activity android:name=".Certificate"
+            android:theme="@style/AppThemee"></activity>
+        <activity android:name=".SearchResults" />
         <activity
             android:name=".SearchActivity"
             android:theme="@style/AppThemee" />
