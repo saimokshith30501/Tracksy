@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppTracksy extends Application {
     public static String deviceID = "sample";
+    public static String token = "";
     private static APIService service;
     @Override
     public void onCreate() {
@@ -33,6 +34,7 @@ public class AppTracksy extends Application {
                     .addInterceptor(chain -> {
                         Request.Builder ongoing = chain.request().newBuilder();
                         ongoing.addHeader("Accept", "application/json");
+                        ongoing.header("Authorization","Bearer "+ AppTracksy.token);
                         Response response = chain.proceed(ongoing.build());
                         return response;
                     });

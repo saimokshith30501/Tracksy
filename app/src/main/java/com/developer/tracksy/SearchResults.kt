@@ -33,7 +33,6 @@ class SearchResults : LoginOrSignUp() {
     lateinit var month : String
     lateinit var year : String
     lateinit var dose : String
-    lateinit var age : String
     lateinit var rv_centers : RecyclerView
     lateinit var setAlerts : ImageButton
     lateinit var goBack : Button
@@ -56,7 +55,6 @@ class SearchResults : LoginOrSignUp() {
         month=intent.getStringExtra("MONTH")!!;
         year=intent.getStringExtra("YEAR")!!;
         dose=intent.getStringExtra("DOSE")!!;
-        age=intent.getStringExtra("AGE")!!;
         centersList= ArrayList()
         adapter= PincodeSlotsRVAdapter(centersList, this)
         val back = findViewById<ImageButton>(R.id.sr_backArrow)
@@ -200,9 +198,6 @@ class SearchResults : LoginOrSignUp() {
                         noData.visibility = View.GONE
                         centersList = ArrayList()
                         getCenters(response.body()!!.sessions!!)
-                        var gson = Gson()
-                        var s = gson.toJson(centersList)
-                        Log.d("TRACKSY_LOGS", gson.toJson(centersList))
                     } else {
                         noData.visibility = View.VISIBLE
                         rv_centers.visibility = View.GONE
@@ -222,13 +217,8 @@ class SearchResults : LoginOrSignUp() {
 
     private fun getCenters(apiSessions: ArrayList<APIPincodeResult>) {
          for (i in 0..apiSessions.lastIndex){
-             if (apiSessions[i].min_age_limit==age){
                  var paid=false
-                 if (apiSessions[i].fee_type=="Paid"){
-                     paid=true
-                 }
-                 else
-                     paid=false
+             paid = apiSessions[i].fee_type=="Paid"
                  if (dose.toInt()==1 && apiSessions[i].available_capacity_dose1>0){
 
                      var data : CentersData = CentersData(apiSessions[i].name, apiSessions[i].address, apiSessions[i].pincode, apiSessions[i].from, apiSessions[i].to, apiSessions[i].lat, apiSessions[i].long, paid, apiSessions[i].vaccine, "Dose 1", apiSessions[i].fee, apiSessions[i].available_capacity_dose1)
@@ -242,7 +232,6 @@ class SearchResults : LoginOrSignUp() {
                      var data : CentersData = CentersData(apiSessions[i].name, apiSessions[i].address, apiSessions[i].pincode, apiSessions[i].from, apiSessions[i].to, apiSessions[i].lat, apiSessions[i].long, paid, apiSessions[i].vaccine, "", apiSessions[i].fee, apiSessions[i].available_capacity)
                      centersList.add(data)
                  }
-             }
          }
         loadingDialog.dismissDialog()
         if (centersList.size!=0) {

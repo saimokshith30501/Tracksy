@@ -4,6 +4,7 @@ import androidx.annotation.AnyRes;
 
 import com.developer.tracksy.Models.ApiResponseModel;
 import com.developer.tracksy.Models.APIPincodeResult;
+import com.developer.tracksy.Models.CertificateModel;
 import com.developer.tracksy.Models.OtpApiResponseModel;
 import com.developer.tracksy.Models.SuccessOtpApiResponseModel;
 import com.developer.tracksy.Utilities.ConfirmOTPClass;
@@ -11,11 +12,14 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 public interface APIService {
 
@@ -27,12 +31,17 @@ public interface APIService {
 
     @POST("auth/public/generateOTP")
     Call<OtpApiResponseModel<String>> generateOTP(
-           @Body JsonObject mobile
+            @Body JsonObject mobile
     );
 
     @POST("auth/public/confirmOTP")
     Call<SuccessOtpApiResponseModel<String>> confirmOTP(
             @Body ConfirmOTPClass confirm
+    );
+    @Streaming
+    @GET("registration/certificate/public/download")
+    Call<ResponseBody> downloadCertificate(
+            @Query("beneficiary_reference_id") String bfID
     );
 
 

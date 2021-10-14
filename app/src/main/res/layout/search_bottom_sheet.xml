@@ -162,60 +162,6 @@
                     android:textCursorDrawable="@null"></com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/koho_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="5dp"
-                android:text="Age Group"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
-                android:textSize="12sp" />
-            <RadioGroup
-                android:id="@+id/sbs_rgAgeGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/sbs_rb18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:includeFontPadding="false"
-                    android:text="18-45"
-                    android:checked="true"
-                    android:tag="18"
-                    android:buttonTint="@color/colorPrimaryDark"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:alpha="0.8"
-                    android:fontFamily="@font/koho_regular">
-                </RadioButton>
-                <RadioButton
-                    android:id="@+id/sbs_rb45"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:layout_marginLeft="60dp"
-                    android:includeFontPadding="false"
-                    android:text="45+"
-                    android:tag="45"
-                    android:buttonTint="@color/colorPrimaryDark"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:alpha="0.8"
-                    android:fontFamily="@font/koho_regular">
-                </RadioButton>
-            </RadioGroup>
-        </LinearLayout>
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"

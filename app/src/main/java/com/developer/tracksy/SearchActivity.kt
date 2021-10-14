@@ -41,7 +41,6 @@ class SearchActivity : AppCompatActivity() {
          tilPincode = view2.findViewById<TextInputLayout>(R.id.sbs_tilPinCode)
          tilDate = view2.findViewById<TextInputLayout>(R.id.sbs_tilDate)
         var checkButton = view2.findViewById<MaterialButton>(R.id.sbs_btCheck)
-        var ageGroup = view2.findViewById<RadioGroup>(R.id.sbs_rgAgeGroup)
         var doseType = view2.findViewById<RadioGroup>(R.id.sbs_rgDose)
         tvPinCode.setOnClickListener {
             cvPinCode.setCardBackgroundColor(resources.getColor(R.color.white))
@@ -56,14 +55,12 @@ class SearchActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             var searchResults = Intent(applicationContext, SearchResults::class.java)
-            var age=view2.findViewById<RadioButton>(ageGroup.checkedRadioButtonId).tag.toString()
             var dose=view2.findViewById<RadioButton>(doseType.checkedRadioButtonId).tag.toString()
             searchResults.putExtra("PINCODE", tilPincode.editText!!.text.toString())
             searchResults.putExtra("DATE", tilDate.editText!!.text.toString())
             searchResults.putExtra("DAY", selectedCalender.get(Calendar.DAY_OF_MONTH).toString())
             searchResults.putExtra("MONTH", (selectedCalender.get(Calendar.MONTH)).toString())
             searchResults.putExtra("YEAR", selectedCalender.get(Calendar.YEAR).toString())
-            searchResults.putExtra("AGE", age)
             searchResults.putExtra("DOSE", dose)
             startActivity(searchResults)
 
