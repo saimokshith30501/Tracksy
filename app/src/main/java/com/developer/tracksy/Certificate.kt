@@ -1,10 +1,14 @@
 package com.developer.tracksy
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.AsyncTask
-import android.os.Bundle
-import android.os.Environment
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.*
 import android.os.Environment.getExternalStoragePublicDirectory
 import android.util.Log
 import android.view.View
@@ -13,6 +17,8 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.developer.tracksy.Models.OtpApiResponseModel
 import com.developer.tracksy.Models.SuccessOtpApiResponseModel
@@ -31,6 +37,8 @@ import java.io.*
 class Certificate : AppCompatActivity() {
     private val TAG = "VACCINE_TRACKER"
     var bottomSheetBehavior: BottomSheetBehavior<*>? = null
+    var downloadStatus : Boolean = false
+    lateinit var filePath : File
     lateinit var sendBtn : Button
     lateinit var verifyBtn : Button
     lateinit var download : Button
@@ -68,6 +76,10 @@ class Certificate : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
         }
+        val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+        filePath = File(getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)!!.path + File.separator.toString() +"42786365008140"+"_Vaccine_Certificate.pdf")
+        buildNotification()
         sendBtn.setOnClickListener {
             loadingDialog.startLoading()
             tilMobile.isErrorEnabled=false
@@ -152,7 +164,7 @@ class Certificate : AppCompatActivity() {
     }
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         return try {
-            val futureStudioIconFile = File(getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)!!.path + File.separator.toString() +tilID.editText!!.text.toString() +".pdf")
+            filePath = File(getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)!!.path + File.separator.toString() +tilID.editText!!.text.toString() +"_Vaccine_Certificate.pdf")
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
             try {
@@ -160,7 +172,7 @@ class Certificate : AppCompatActivity() {
                 val fileSize = body.contentLength()
                 var fileSizeDownloaded: Long = 0
                 inputStream = body.byteStream()
-                outputStream = FileOutputStream(futureStudioIconFile)
+                outputStream = FileOutputStream(filePath)
                 while (true) {
                     val read: Int = inputStream.read(fileReader)
                     if (read == -1) {
@@ -195,30 +207,85 @@ class Certificate : AppCompatActivity() {
 
             override fun onResponse(call: Call<ResponseBody>,response: Response<ResponseBody>) {
                 if (response.isSuccessful){
-                    object : AsyncTask<Void?, Void?, Void?>() {
+                  object : AsyncTask<Void?, Void?, Void?>() {
 
-                        protected override fun doInBackground(vararg voids: Void?): Void? {
-
-                            if (writeResponseBodyToDisk(response.body()!!)){
-                                llEnterBenID.visibility=View.GONE
-                                llDownloaded.visibility=View.VISIBLE
-                                loadingDialog.dismissDialog()
-                            }else{
-                                Snackbar.make(back,"Something Broke Down!",Snackbar.LENGTH_SHORT).show()
-                                loadingDialog.dismissDialog()
-                            }
+                         override fun doInBackground(vararg voids: Void?): Void? {
+                            downloadStatus=writeResponseBodyToDisk(response.body()!!)
                             return null
-
                         }
+
+                      override fun onPostExecute(result: Void?) {
+                          super.onPostExecute(result)
+                          if (downloadStatus){
+                              llEnterBenID.visibility=View.GONE
+                              llDownloaded.visibility=View.VISIBLE
+                              buildNotification()
+                          }
+                          else{
+                              Snackbar.make(back,"Something Broke Down!",Snackbar.LENGTH_SHORT).show()
+                              loadingDialog.dismissDialog()
+                          }
+                      }
 
                     }.execute()
                 }else if (response.code()==500){
                     loadingDialog.dismissDialog()
-                    Snackbar.make(sendBtn,response.message(),Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(back,"Beneficiary Reference ID Does Not Exist",Snackbar.LENGTH_SHORT).show()
                 }
 
             }
         })
+    }
+
+    private fun buildNotification() {
+
+
+        val target = Intent(Intent.ACTION_VIEW)
+        target.setDataAndType(Uri.fromFile(filePath), "application/pdf")
+        target.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        val pdfOpenintent = Intent.createChooser(target, "Open File")
+//        val pdfOpenintent = Intent(Intent.ACTION_VIEW)
+//        pdfOpenintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//        pdfOpenintent.setDataAndType(path, "application/pdf")
+        pdfOpenintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(this, System.currentTimeMillis().toInt() / 100, pdfOpenintent, PendingIntent.FLAG_ONE_SHOT)
+        val builder = NotificationCompat.Builder(this, createNotificationChannel()!!)
+                .setSmallIcon(R.drawable.tpng)
+                .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setContentTitle("Certificate Downloaded")
+                .setContentText(tilID.editText!!.text.toString() +"_Vaccine_Certificate.pdf")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .addAction(R.drawable.ic_baseline_arrow_downward_24, getString(R.string.Download),
+                        pendingIntent)
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(System.currentTimeMillis().toInt() / 100, builder.build())
+    }
+
+    private fun createNotificationChannel(): String? {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        val CHANNEL_ID = "TRACKSY_NOTIFICATIONS"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "TRACKSY Notifications"
+            val description = "Vaccine Certificate Notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+            channel.description = description
+            channel.enableVibration(true)
+            channel.canShowBadge()
+            channel.enableLights(true)
+            channel.importance = NotificationManager.IMPORTANCE_HIGH
+            channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
+
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+        return CHANNEL_ID
     }
 
     private fun sendOtp(mob: String) {
