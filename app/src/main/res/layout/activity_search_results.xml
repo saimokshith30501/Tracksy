@@ -10,16 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageButton
             android:id="@+id/sr_backArrow"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_back_arrow"
-            android:layout_marginLeft="20dp"
-            android:layout_alignParentStart="true"
-            android:background="@null"
             android:layout_width="28dp"
-            android:layout_height="28dp">
-        </ImageButton>
+            android:layout_height="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:src="@drawable/ic_back_arrow"></ImageButton>
+
         <TextView
             android:layout_centerHorizontal="true"
             android:id="@+id/sr_tvTitle"
@@ -71,28 +72,6 @@
                 android:layout_height="28dp">
             </ImageButton>
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/sr_alerts"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_alerts"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:layout_width="28dp"
-            android:layout_height="28dp">
-        </ImageButton>
-        <ImageButton
-            android:visibility="gone"
-            android:id="@+id/sr_dismissAlerts"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_dismiss"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:layout_width="28dp"
-            android:layout_height="28dp">
-        </ImageButton>
     </RelativeLayout>
     <LinearLayout
         android:visibility="gone"

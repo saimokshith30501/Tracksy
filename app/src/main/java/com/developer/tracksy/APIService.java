@@ -1,20 +1,54 @@
 package com.developer.tracksy;
 
+import androidx.annotation.AnyRes;
+
 import com.developer.tracksy.Models.ApiResponseModel;
 import com.developer.tracksy.Models.APIPincodeResult;
+import com.developer.tracksy.Models.CertificateModel;
+import com.developer.tracksy.Models.OtpApiResponseModel;
+import com.developer.tracksy.Models.SuccessOtpApiResponseModel;
+import com.developer.tracksy.Utilities.ConfirmOTPClass;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 public interface APIService {
 
-    @GET("findByPin")
+    @GET("appointment/sessions/public/findByPin")
     Call<ApiResponseModel<ArrayList<APIPincodeResult>>> checkVaccinesByPincode(
             @Query("pincode") String pincode,
             @Query("date") String date
     );
+
+    @POST("auth/public/generateOTP")
+    Call<OtpApiResponseModel<String>> generateOTP(
+            @Body JsonObject mobile
+    );
+
+    @POST("auth/public/confirmOTP")
+    Call<SuccessOtpApiResponseModel<String>> confirmOTP(
+            @Body ConfirmOTPClass confirm
+    );
+    @Streaming
+    @GET("registration/certificate/public/download")
+    Call<ResponseBody> downloadCertificate(
+            @Query("beneficiary_reference_id") String bfID
+    );
+
+    @POST
+    Call<ResponseBody> customEvent(@Url String url,@Body JsonObject jsonObject);
+
 
 }

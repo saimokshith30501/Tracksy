@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import io.branch.referral.Branch;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,10 +20,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppTracksy extends Application {
     public static String deviceID = "sample";
+    public static String token = "";
     private static APIService service;
     @Override
     public void onCreate() {
         super.onCreate();
+        // Initialize the Branch object
+        Branch.getAutoInstance(this);
+        Branch.enableLogging();
         setupFCM();
     }
     public static APIService buildApiService() {
@@ -33,6 +38,7 @@ public class AppTracksy extends Application {
                     .addInterceptor(chain -> {
                         Request.Builder ongoing = chain.request().newBuilder();
                         ongoing.addHeader("Accept", "application/json");
+                        ongoing.header("Authorization","Bearer "+ AppTracksy.token);
                         Response response = chain.proceed(ongoing.build());
                         return response;
                     });
@@ -43,7 +49,7 @@ public class AppTracksy extends Application {
             }
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/")
+                    .baseUrl("https://cdn-api.co-vin.in/api/v2/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(builder.build())
                     .build();
