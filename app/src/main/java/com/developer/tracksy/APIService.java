@@ -10,6 +10,8 @@ import com.developer.tracksy.Models.SuccessOtpApiResponseModel;
 import com.developer.tracksy.Utilities.ConfirmOTPClass;
 import com.google.gson.JsonObject;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -20,6 +22,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 public interface APIService {
 
@@ -43,6 +46,9 @@ public interface APIService {
     Call<ResponseBody> downloadCertificate(
             @Query("beneficiary_reference_id") String bfID
     );
+
+    @POST
+    Call<ResponseBody> customEvent(@Url String url,@Body JsonObject jsonObject);
 
 
 }

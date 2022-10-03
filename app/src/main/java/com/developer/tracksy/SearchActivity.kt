@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
@@ -13,10 +12,12 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import io.branch.referral.util.BRANCH_STANDARD_EVENT
+import io.branch.referral.util.BranchEvent
+import org.json.JSONObject
 import java.util.*
 
 class SearchActivity : AppCompatActivity() {
@@ -62,10 +63,17 @@ class SearchActivity : AppCompatActivity() {
             searchResults.putExtra("MONTH", (selectedCalender.get(Calendar.MONTH)).toString())
             searchResults.putExtra("YEAR", selectedCalender.get(Calendar.YEAR).toString())
             searchResults.putExtra("DOSE", dose)
+            BranchEvent(BRANCH_STANDARD_EVENT.SEARCH)
+                .setSearchQuery(tilPincode.editText!!.text.toString()+" On "+tilDate.editText!!.text.toString())
+                .setDescription("Vaccine Search")
+                .addCustomDataProperty("Pincode",tilPincode.editText!!.text.toString())
+                .logEvent(this)
             startActivity(searchResults)
 
         }
         //
+        val jsonObject = JSONObject()
+
 
         tilDate.editText!!.setOnClickListener {
             val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

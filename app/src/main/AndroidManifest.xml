@@ -13,8 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Certificate"
-            android:theme="@style/AppThemee"></activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:theme="@style/AppThemee" />
+        <!-- android:name="io.branch.referral.BranchApp" -->
+        <activity
+            android:name=".NotificationSet"
+            android:theme="@style/AppThemee" />
+
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".Certificate"
+            android:theme="@style/AppThemee" />
         <activity android:name=".SearchResults" />
         <activity
             android:name=".SearchActivity"
@@ -32,21 +46,43 @@
             android:name=".LogIn"
             android:theme="@style/AppThemee" />
         <activity android:name=".LoginOrSignUp" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <service
-            android:name=".FMS"
-            android:exported="false">
+            <!-- Branch URI scheme -->
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <data
+                    android:host="open"
+                    android:scheme="tracksy" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
-        </service>
+
+            <!-- Branch App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tracksy.app.link"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity> <!-- Branch init -->
+        <meta-data
+            android:name="io.branch.sdk.BranchKey"
+            android:value="key_live_jhWT3SoRhVR9f3e1h2ZFpdhdsqlktmTp" /> <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+        <meta-data
+            android:name="io.branch.sdk.TestMode"
+            android:value="false" />
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.developer.tracksy;
 
 import android.app.ActivityOptions;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
@@ -12,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import java.util.Calendar;
+
 public class LoginOrSignUp extends AppCompatActivity {
+    private static final int NOTIFICATION_REMINDER_NIGHT = 0;
     Button SignUp;
     Button LogIn;
     TextView App;
@@ -30,7 +35,6 @@ public class LoginOrSignUp extends AppCompatActivity {
         App=findViewById(R.id.App);
         Title=findViewById(R.id.subTitle);
         subTitile=findViewById(R.id.Title);
-
     }
     public void signup(View view){
         Intent startActivity = new Intent(LoginOrSignUp.this, HomeScreen.class);

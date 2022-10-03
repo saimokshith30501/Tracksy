@@ -79,7 +79,7 @@ class Certificate : AppCompatActivity() {
         val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
         filePath = File(getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)!!.path + File.separator.toString() +"42786365008140"+"_Vaccine_Certificate.pdf")
-        buildNotification()
+//        buildNotification()
         sendBtn.setOnClickListener {
             loadingDialog.startLoading()
             tilMobile.isErrorEnabled=false
@@ -217,9 +217,11 @@ class Certificate : AppCompatActivity() {
                       override fun onPostExecute(result: Void?) {
                           super.onPostExecute(result)
                           if (downloadStatus){
+                              loadingDialog.dismissDialog()
                               llEnterBenID.visibility=View.GONE
                               llDownloaded.visibility=View.VISIBLE
                               buildNotification()
+
                           }
                           else{
                               Snackbar.make(back,"Something Broke Down!",Snackbar.LENGTH_SHORT).show()
@@ -245,9 +247,6 @@ class Certificate : AppCompatActivity() {
         target.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         val pdfOpenintent = Intent.createChooser(target, "Open File")
-//        val pdfOpenintent = Intent(Intent.ACTION_VIEW)
-//        pdfOpenintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        pdfOpenintent.setDataAndType(path, "application/pdf")
         pdfOpenintent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
         val pendingIntent = PendingIntent.getActivity(this, System.currentTimeMillis().toInt() / 100, pdfOpenintent, PendingIntent.FLAG_ONE_SHOT)
         val builder = NotificationCompat.Builder(this, createNotificationChannel()!!)
@@ -265,8 +264,6 @@ class Certificate : AppCompatActivity() {
     }
 
     private fun createNotificationChannel(): String? {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         val CHANNEL_ID = "TRACKSY_NOTIFICATIONS"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = "TRACKSY Notifications"
@@ -279,9 +276,6 @@ class Certificate : AppCompatActivity() {
             channel.enableLights(true)
             channel.importance = NotificationManager.IMPORTANCE_HIGH
             channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null)
-
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
@@ -293,6 +287,7 @@ class Certificate : AppCompatActivity() {
         js.addProperty("mobile",mob);
            API.get().generateOTP(js).enqueue(object : Callback<OtpApiResponseModel<String>>{
                override fun onFailure(call: Call<OtpApiResponseModel<String>>, t: Throwable) {
+                   loadingDialog.dismissDialog()
                    Snackbar.make(back,t.message.toString(),Snackbar.LENGTH_SHORT).show()
                }
 

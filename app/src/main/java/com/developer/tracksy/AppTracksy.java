@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import io.branch.referral.Branch;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -24,6 +25,9 @@ public class AppTracksy extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Initialize the Branch object
+        Branch.getAutoInstance(this);
+        Branch.enableLogging();
         setupFCM();
     }
     public static APIService buildApiService() {
