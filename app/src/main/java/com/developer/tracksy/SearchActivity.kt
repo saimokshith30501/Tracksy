@@ -94,6 +94,8 @@ class SearchActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
     }
+
+    
     private fun validatePincode(): Boolean {
         val value: String = tilPincode.editText!!.getText().toString()
         return if (value.isEmpty()) {

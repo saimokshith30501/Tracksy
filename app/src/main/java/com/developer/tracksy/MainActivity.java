@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Branch.enableLogging();
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setStatusBarColor(Color.parseColor("#F89E34"));
@@ -52,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
          new Handler().postDelayed(new Runnable(){
                         @Override
                         public void run(){
+
                             if (deepLink){
+                                Log.d("BRANCH_OBJECT","splash "+ new Gson().toJson(buo));
                                 if (buo.getContentMetadata().getCustomMetadata().get("$android_deeplink_path").equals("DetailsActivity")){
-                                    Log.d("BRANCH_DATA", new Gson().toJson(buo.getContentMetadata().getCustomMetadata()));
+//                                    Log.d("BRANCH_DATA", new Gson().toJson(buo.getContentMetadata().getCustomMetadata()));
                                     Intent details = new Intent(MainActivity.this, DetailsActivity.class);
                                     DetailReq detailReq = new DetailReq(buo.getContentMetadata().getCustomMetadata().get("date"),buo.getContentMetadata().getCustomMetadata().get("pincode"),buo.getContentMetadata().getCustomMetadata().get("center_id"));
                                     details.putExtra("centerData", new Gson().toJson(detailReq));
@@ -74,17 +77,22 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         Branch.getInstance().initSession(branchReferralInitListener, this.getIntent().getData(), this);
+        Branch.enableLogging();
     }
 
     public Branch.BranchUniversalReferralInitListener branchReferralInitListener = new Branch.BranchUniversalReferralInitListener() {
         @Override
         public void onInitFinished(@Nullable BranchUniversalObject branchUniversalObject, @Nullable LinkProperties linkProperties, @Nullable BranchError error) {
-                callCustomEventApi();
+
+            Log.d("BRANCH_OBJECT","ON_INIT_FINISHED"+ new Gson().toJson(branchUniversalObject));
+            Log.d("BRANCH_OBJECT","ON_INIT_FINISHED"+ "link "+ new Gson().toJson(linkProperties));
+            Log.d("BRANCH_OBJECT","ON_INIT_FINISHED"+"latest "+ new Gson().toJson(Branch.getAutoInstance(getApplicationContext()).getLatestReferringParams()));
                 if (branchUniversalObject!=null && branchUniversalObject.getContentMetadata().getCustomMetadata().containsKey("$android_deeplink_path")){
                     buo=branchUniversalObject;
                     SplashDelay(true);
-                    Log.d("BRANCH_DATA", new Gson().toJson(branchUniversalObject.getDescription()));
+
                 }else {
+
                     SplashDelay(false);
                 }
         }

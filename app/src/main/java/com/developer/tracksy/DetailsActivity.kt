@@ -54,10 +54,6 @@ class DetailsActivity : AppCompatActivity() {
     private fun openSendIntent() {
         var myBranchObj= BranchUniversalObject()
         myBranchObj = BranchUniversalObject()
-            .setCanonicalIdentifier(data.center_id)
-            .setTitle(data.name)
-            .setContentDescription(data.name+" is located at "+data.address+" with the availaible capacity of "+data.available_capacity+" "+data.vaccine+" Doses!")
-            .setContentImageUrl("https://www.cowin.gov.in/assets/images/Date_Correction.svg")
             .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
             .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
         val lp = LinkProperties()
@@ -66,9 +62,13 @@ class DetailsActivity : AppCompatActivity() {
             .setCampaign("Sharing vaccination centers")
             .setStage("Center Details")
             .addControlParameter("\$android_deeplink_path","DetailsActivity")
+            .addControlParameter("\$og_title","Gemüseauflauf mit veganem Pfannenkäse")
+            .addControlParameter("\$desktop_url","https://website-stage.sevencooks.com/de/rezept/17624")
             .addControlParameter("date", data.date)
             .addControlParameter("pincode",data.pincode)
             .addControlParameter("center_id",data.center_id)
+        lp.alias="ikik"
+
         myBranchObj.generateShortUrl(this, lp
         ) { url, error ->
             if (error == null) {
